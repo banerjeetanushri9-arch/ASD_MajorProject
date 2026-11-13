@@ -553,6 +553,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1158811041577748947, guid: 1c4f567c7237e43d69bb3b1d65650793, type: 3}
+      propertyPath: m_Name
+      value: roof
+      objectReference: {fileID: 0}
     - target: {fileID: 1580137966251835237, guid: 1c4f567c7237e43d69bb3b1d65650793, type: 3}
       propertyPath: m_Name
       value: House
