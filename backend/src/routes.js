@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const prisma = require("./database");
+const verifyAdmin = require("./authMiddleware");
 
 // GET all house types
 router.get("/house-types", async (req, res) => {
@@ -48,7 +49,7 @@ router.get("/rates", async (req, res) => {
 });
 
 // ADD a state rate
-router.post("/rates", async (req, res) => {
+router.post("/rates", verifyAdmin, async (req, res) => {
   try {
     const { state, baseRate } = req.body;
 
@@ -70,7 +71,7 @@ router.post("/rates", async (req, res) => {
 });
 
 // UPDATE a state rate
-router.put("/rates/:id", async (req, res) => {
+router.put("/rates/:id", verifyAdmin, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const { baseRate } = req.body;
