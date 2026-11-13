@@ -635,6 +635,19 @@ MonoBehaviour:
   house: {fileID: 1915348664}
   walls: {fileID: 1736432586}
   roof: {fileID: 1476348916}
+--- !u!114 &1915348667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915348663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2597b433270454285490f0798171d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ApiClient
+  baseUrl: http://localhost:3000
 --- !u!1001 &1357968044104387895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -701,6 +714,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1580137966251835237, guid: 1c4f567c7237e43d69bb3b1d65650793, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1915348665}
+    - targetCorrespondingSourceObject: {fileID: 1580137966251835237, guid: 1c4f567c7237e43d69bb3b1d65650793, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1915348667}
   m_SourcePrefab: {fileID: 100100000, guid: 1c4f567c7237e43d69bb3b1d65650793, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
