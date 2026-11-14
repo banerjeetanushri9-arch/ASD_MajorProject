@@ -3,6 +3,12 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import './Home.css'
 
+
+function launchUnityApp() {
+  window.location.href = 'housevisualizer://launch'
+}
+
+
 // Animated particle canvas background
 function ParticleCanvas() {
   const canvasRef = useRef(null)
@@ -149,7 +155,7 @@ export default function Home() {
               id="hero-3d-viewer-btn"
               className="btn btn-secondary hero__btn-3d"
               title="Unity 3D Viewer — Integration coming soon"
-              onClick={() => alert('🔧 Unity 3D integration will be available once the Unity build is ready. Stay tuned!')}
+              onClick={launchUnityApp}
             >
               <span className="hero__btn-icon">🎮</span>
               Launch 3D Viewer
@@ -160,7 +166,7 @@ export default function Home() {
               id="hero-ar-btn"
               className="btn btn-secondary hero__btn-ar"
               title="AR Experience — Integration coming soon"
-              onClick={() => alert('📱 AR experience will be available once the AR build is ready. Stay tuned!')}
+              onClick={launchUnityApp}
             >
               <span>📱</span>
               AR Preview
@@ -254,14 +260,14 @@ export default function Home() {
                 <button
                   id="home-3d-launch-btn"
                   className="btn btn-primary"
-                  onClick={() => alert('🔧 Unity 3D integration coming soon! Integration details will be provided when the Unity build is ready.')}
+                  onClick={launchUnityApp}
                 >
                   🎮 Launch 3D Viewer
                 </button>
                 <button
                   id="home-ar-launch-btn"
                   className="btn btn-secondary"
-                  onClick={() => alert('📱 AR Preview coming soon! Scan your plot with your phone camera to place your virtual house.')}
+                  onClick={launchUnityApp}
                 >
                   📱 Try AR Preview
                 </button>
