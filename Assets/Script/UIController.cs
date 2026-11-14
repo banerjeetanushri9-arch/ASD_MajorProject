@@ -126,29 +126,21 @@ public class UIController : MonoBehaviour
         houseVisualizer.ApplyRoof(index);
     }
 
-    void OnStageChanged(float value)
+  
+void OnStageChanged(float value)
 {
-    int stage = Mathf.Clamp(
-        Mathf.RoundToInt(value), 1, 4
-    );
+    int stage = Mathf.Clamp(Mathf.RoundToInt(value), 1, 4);
 
     stageController.SetStage(stage);
 
-    string[] names =
-    {
-        "Foundation",
-        "Walls",
-        "Roof",
-        "Finishing"
-    };
-
+    string[] names = { "Foundation", "Walls", "Roof", "Finishing" };
     stageNameText.text = names[stage - 1];
 
     UpdateStageCost(stage);
-
-
 }
-    void UpdateStageCost(int stage)
+
+
+void UpdateStageCost(int stage)
 {
     if (currentEstimate == null || currentEstimate.stages == null)
     {
@@ -156,32 +148,45 @@ public class UIController : MonoBehaviour
         return;
     }
 
-    int cost = 0;
+    int stageCost = 0;
+    int cumulativeCost = 0;
 
     switch (stage)
     {
         case 1:
-            cost = currentEstimate.stages.foundation;
+            stageCost = currentEstimate.stages.foundation;
+            cumulativeCost = stageCost;
             break;
 
         case 2:
-            cost = currentEstimate.stages.walls;
+            stageCost = currentEstimate.stages.walls;
+            cumulativeCost = currentEstimate.stages.foundation
+                           + currentEstimate.stages.walls;
             break;
 
         case 3:
-            cost = currentEstimate.stages.roof;
+            stageCost = currentEstimate.stages.roof;
+            cumulativeCost = currentEstimate.stages.foundation
+                           + currentEstimate.stages.walls
+                           + currentEstimate.stages.roof;
             break;
 
         case 4:
-            cost = currentEstimate.stages.finishing;
+            stageCost = currentEstimate.stages.finishing;
+            cumulativeCost = currentEstimate.total;
             break;
     }
 
-    stageText.text = "Stage Cost: Rs " + cost.ToString("N0");
+    stageText.text = "Stage Cost: Rs " + stageCost.ToString("N0");
+    totalText.text = "Total Cost: Rs " + cumulativeCost.ToString("N0");
+
+    if (currentEstimate.offline)
+        totalText.text += " (Offline Estimate)";
 }
 
+
     public void RequestEstimate()
-    {
+    {    Debug.Log("CALCULATE ESTIMATE BUTTON CLICKED");
         // Make sure dropdowns contain options.
         if (houseDropdown.options.Count == 0 ||
             wallDropdown.options.Count == 0 ||

@@ -26,7 +26,7 @@ public class ARPlaceHouse : MonoBehaviour
             Touch t = Input.GetTouch(0);
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject(t.fingerId)) return;
 
-            if (t.phase == TouchPhase.Began || t.phase == TouchPhase.Moved)
+            if (!placed && t.phase == TouchPhase.Began)
             {
                 if (raycastManager.Raycast(t.position, hits, TrackableType.PlaneWithinPolygon))
                 {

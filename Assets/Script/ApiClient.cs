@@ -54,6 +54,13 @@ public class ApiClient : MonoBehaviour
 
             yield return www.SendWebRequest();
 
+            Debug.Log("API URL: " + baseUrl + "/api/estimate");
+Debug.Log("API Request: " + json);
+Debug.Log("API Result: " + www.result);
+Debug.Log("API Response Code: " + www.responseCode);
+Debug.Log("API Response: " + www.downloadHandler.text);
+Debug.Log("API Error: " + www.error);
+
             if (www.result == UnityWebRequest.Result.Success)
             {
                 try
