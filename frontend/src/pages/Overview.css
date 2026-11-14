@@ -1,0 +1,160 @@
+/* src/pages/Overview.css */
+
+.overview__hero {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(26,127,166,0.18) 0%, transparent 60%),
+              var(--grad-hero);
+}
+
+.txt-gradient {
+  background: linear-gradient(135deg, var(--clr-saffron-400), var(--clr-teal-300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.overview__hero-sub {
+  font-size: 1.1rem;
+  color: var(--txt-secondary);
+  max-width: 640px;
+  margin: var(--space-lg) auto 0;
+  line-height: 1.75;
+}
+
+/* Mission */
+.overview__mission-card {
+  display: flex;
+  gap: var(--space-xl);
+  align-items: flex-start;
+  padding: var(--space-2xl);
+}
+
+.overview__mission-icon {
+  font-size: 3.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+  filter: drop-shadow(0 0 16px rgba(245,166,35,0.4));
+}
+
+/* Benefits */
+.overview__benefit-card {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: flex-start;
+  padding: var(--space-xl);
+  border-top: 3px solid var(--card-accent);
+}
+
+.overview__benefit-icon {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.overview__benefit-title {
+  font-size: 1.1rem;
+  color: var(--txt-primary);
+}
+
+/* Stats ribbon */
+.overview__stats-ribbon {
+  background: linear-gradient(135deg, rgba(26,127,166,0.12) 0%, rgba(245,166,35,0.06) 100%);
+  border-top: 1px solid var(--bg-glass-border);
+  border-bottom: 1px solid var(--bg-glass-border);
+  padding-block: var(--space-2xl);
+}
+
+.overview__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+  text-align: center;
+}
+
+.overview__stat { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.overview__stat-num {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--txt-primary);
+  line-height: 1;
+}
+
+.overview__stat-lbl {
+  font-size: 0.85rem;
+  color: var(--txt-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Timeline */
+.overview__timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 700px;
+  margin-inline: auto;
+  position: relative;
+}
+
+.overview__timeline::before {
+  content: '';
+  position: absolute;
+  left: 70px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--clr-teal-500), var(--clr-saffron-500));
+  border-radius: 2px;
+}
+
+.overview__timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+}
+
+.overview__timeline-dot {
+  flex-shrink: 0;
+  width: 72px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.overview__timeline-dot span {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--clr-saffron-400);
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.6rem;
+  position: relative;
+  z-index: 1;
+}
+
+.overview__timeline-card {
+  flex: 1;
+  padding: var(--space-lg);
+  font-size: 0.95rem;
+  color: var(--txt-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .overview__mission-card { flex-direction: column; }
+  .overview__stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .overview__benefit-card { flex-direction: column; }
+}
+
+@media (max-width: 500px) {
+  .overview__stats-grid { grid-template-columns: 1fr 1fr; }
+  .overview__timeline::before { left: 54px; }
+  .overview__timeline-dot { width: 56px; }
+}
