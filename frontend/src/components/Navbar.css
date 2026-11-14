@@ -1,0 +1,190 @@
+/* src/components/Navbar.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: background var(--trans-normal), backdrop-filter var(--trans-normal), box-shadow var(--trans-normal);
+  padding: 0 var(--space-xl);
+}
+
+.navbar--scrolled {
+  background: rgba(7, 24, 32, 0.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 var(--bg-glass-border), 0 4px 24px rgba(0,0,0,0.3);
+}
+
+.navbar__inner {
+  max-width: 1200px;
+  margin-inline: auto;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+/* Logo */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar__logo-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 8px rgba(245,166,35,0.6));
+}
+
+.navbar__logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--txt-primary);
+  letter-spacing: -0.03em;
+}
+
+.navbar__logo-accent {
+  color: var(--clr-saffron-400);
+}
+
+/* Nav links */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.navbar__link {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: var(--txt-secondary);
+  transition: all var(--trans-fast);
+  white-space: nowrap;
+}
+
+.navbar__link:hover {
+  color: var(--txt-primary);
+  background: rgba(255,255,255,0.06);
+}
+
+.navbar__link--active {
+  color: var(--clr-teal-300);
+  background: rgba(26,127,166,0.15);
+}
+
+/* Right actions */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+/* Hamburger */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  margin-left: auto;
+  transition: background var(--trans-fast);
+}
+
+.navbar__hamburger:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.navbar__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--txt-primary);
+  border-radius: 2px;
+  transition: all var(--trans-normal);
+  transform-origin: center;
+}
+
+.navbar__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.navbar__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+.navbar__drawer {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: rgba(7, 24, 32, 0.98);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--bg-glass-border);
+  padding: var(--space-lg) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--trans-normal), opacity var(--trans-normal);
+}
+
+.navbar__drawer--open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.navbar__drawer nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.navbar__drawer-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--txt-secondary);
+  transition: all var(--trans-fast);
+}
+
+.navbar__drawer-link:hover {
+  color: var(--txt-primary);
+  background: rgba(255,255,255,0.06);
+}
+
+.navbar__drawer-link--active {
+  color: var(--clr-teal-300);
+  background: rgba(26,127,166,0.15);
+}
+
+.navbar__drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--bg-glass-border);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .navbar__links,
+  .navbar__actions { display: none; }
+  .navbar__hamburger { display: flex; }
+}
+
+@media (max-width: 480px) {
+  .navbar { padding: 0 var(--space-md); }
+}
