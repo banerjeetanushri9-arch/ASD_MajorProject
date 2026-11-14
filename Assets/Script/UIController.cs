@@ -24,9 +24,11 @@ public class UIController : MonoBehaviour
     public HouseVisualizer houseVisualizer;
     public StageController stageController;
     public ApiClient apiClient;
+    EstimateResponse currentEstimate;
 
     void Start()
-    {
+    {  
+        Debug.Log("UIController Start is running");
         // Check that all required references are assigned.
         if (houseDropdown == null || wallDropdown == null ||
             roofDropdown == null || stateDropdown == null ||
@@ -125,23 +127,58 @@ public class UIController : MonoBehaviour
     }
 
     void OnStageChanged(float value)
+{
+    int stage = Mathf.Clamp(
+        Mathf.RoundToInt(value), 1, 4
+    );
+
+    stageController.SetStage(stage);
+
+    string[] names =
     {
-        int stage = Mathf.Clamp(
-            Mathf.RoundToInt(value), 1, 4
-        );
+        "Foundation",
+        "Walls",
+        "Roof",
+        "Finishing"
+    };
 
-        stageController.SetStage(stage);
+    stageNameText.text = names[stage - 1];
 
-        string[] names =
-        {
-            "Foundation",
-            "Walls",
-            "Roof",
-            "Finishing"
-        };
+    UpdateStageCost(stage);
 
-        stageNameText.text = names[stage - 1];
+
+}
+    void UpdateStageCost(int stage)
+{
+    if (currentEstimate == null || currentEstimate.stages == null)
+    {
+        stageText.text = "Calculate estimate first";
+        return;
     }
+
+    int cost = 0;
+
+    switch (stage)
+    {
+        case 1:
+            cost = currentEstimate.stages.foundation;
+            break;
+
+        case 2:
+            cost = currentEstimate.stages.walls;
+            break;
+
+        case 3:
+            cost = currentEstimate.stages.roof;
+            break;
+
+        case 4:
+            cost = currentEstimate.stages.finishing;
+            break;
+    }
+
+    stageText.text = "Stage Cost: Rs " + cost.ToString("N0");
+}
 
     public void RequestEstimate()
     {
@@ -178,25 +215,25 @@ public class UIController : MonoBehaviour
     }
 
     void DisplayEstimate(EstimateResponse result)
+{
+    if (result == null || result.stages == null)
     {
-        if (result == null || result.stages == null)
-        {
-            Debug.LogError("Invalid estimate response!");
-            return;
-        }
-
-        totalText.text =
-            "Total Cost: Rs " + result.total.ToString("N0");
-
-        if (result.offline)
-        {
-            totalText.text += " (Offline Estimate)";
-        }
-
-        stageText.text =
-            "Foundation: Rs " + result.stages.foundation.ToString("N0") +
-            "\nWalls: Rs " + result.stages.walls.ToString("N0") +
-            "\nRoof: Rs " + result.stages.roof.ToString("N0") +
-            "\nFinishing: Rs " + result.stages.finishing.ToString("N0");
+        Debug.LogError("Invalid estimate response!");
+        return;
     }
+
+    currentEstimate = result;
+
+    totalText.text =
+        "Total Cost: Rs " + result.total.ToString("N0");
+
+    if (result.offline)
+    {
+        totalText.text += " (Offline Estimate)";
+    }
+
+    UpdateStageCost(
+        Mathf.RoundToInt(stageSlider.value)
+    );
+}
 }

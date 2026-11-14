@@ -33,7 +33,7 @@ public class EstimateResponse
 
 public class ApiClient : MonoBehaviour
 {
-    public string baseUrl = "http://localhost:3000";
+    public string baseUrl = "http://192.168.1.4:3000";
 
     public void GetEstimate(EstimateRequest req, Action<EstimateResponse> onDone)
     {

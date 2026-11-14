@@ -5304,7 +5304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c2597b433270454285490f0798171d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ApiClient
-  baseUrl: http://localhost:3000
+  baseUrl: http://192.168.1.4:3000.
 --- !u!1 &1535397079
 GameObject:
   m_ObjectHideFlags: 0
