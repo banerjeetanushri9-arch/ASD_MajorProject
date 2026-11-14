@@ -1,0 +1,275 @@
+/* src/pages/HowItWorks.css */
+
+.hiw__hero {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245,166,35,0.12) 0%, transparent 60%), var(--grad-hero);
+}
+
+.txt-gradient-teal {
+  background: linear-gradient(135deg, var(--clr-teal-300), var(--clr-teal-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hiw__hero-sub {
+  font-size: 1.1rem;
+  color: var(--txt-secondary);
+  max-width: 540px;
+  margin: var(--space-lg) auto 0;
+  line-height: 1.75;
+}
+
+/* Steps */
+.hiw__steps-section { padding-bottom: 0; }
+
+.hiw__step {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  align-items: flex-start;
+}
+
+.hiw__step--reverse {
+  direction: rtl;
+}
+
+.hiw__step--reverse > * { direction: ltr; }
+
+.hiw__step-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hiw__step-circle {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-shrink: 0;
+  transition: transform var(--trans-normal), box-shadow var(--trans-normal);
+}
+
+.hiw__step:hover .hiw__step-circle {
+  transform: scale(1.05);
+  box-shadow: 0 0 24px var(--step-color, rgba(26,127,166,0.4));
+}
+
+.hiw__step-emoji { font-size: 1.75rem; line-height: 1; }
+.hiw__step-num  { font-size: 0.65rem; font-weight: 700; color: var(--txt-muted); letter-spacing: 0.08em; }
+
+.hiw__step-connector {
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--step-color, var(--clr-teal-400)), transparent);
+  margin-top: 4px;
+  border-radius: 2px;
+}
+
+.hiw__step-content {
+  padding: var(--space-xl);
+}
+
+.hiw__step-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.hiw__step-title {
+  font-size: 1.5rem;
+  color: var(--txt-primary);
+}
+
+.hiw__step-desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.hiw__step-details {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hiw__step-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--txt-secondary);
+}
+
+.hiw__step-check { font-weight: 700; flex-shrink: 0; }
+
+/* Formula */
+.hiw__formula-section {
+  background: rgba(26,127,166,0.04);
+  border-top: 1px solid var(--bg-glass-border);
+  border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.hiw__formula {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.hiw__formula-box {
+  padding: var(--space-2xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.hiw__formula-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--txt-muted);
+}
+
+.hiw__formula-eq {
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  color: var(--txt-primary);
+  background: rgba(255,255,255,0.04);
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--bg-glass-border);
+  line-height: 1.6;
+}
+
+.hiw__formula-example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hiw__formula-label {
+  font-size: 0.8rem;
+  color: var(--txt-muted);
+  letter-spacing: 0.04em;
+}
+
+.hiw__formula-result {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--txt-secondary);
+}
+
+.hiw__formula-result strong {
+  color: var(--clr-saffron-400);
+  font-size: 1.5rem;
+}
+
+.hiw__formula-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.hiw__formula-step {
+  background: var(--bg-card);
+  border: 1px solid var(--bg-glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hiw__formula-step-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--clr-teal-300);
+}
+
+.hiw__formula-step-desc {
+  font-size: 0.8rem;
+  color: var(--txt-muted);
+}
+
+/* Stages */
+.hiw__stages {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+.hiw__stage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.hiw__stage-icon { font-size: 1.75rem; flex-shrink: 0; }
+
+.hiw__stage-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hiw__stage-name {
+  font-weight: 600;
+  color: var(--txt-primary);
+  font-size: 0.95rem;
+}
+
+.hiw__stage-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.hiw__stage-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s var(--ease-out);
+}
+
+.hiw__stage-pct {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  min-width: 48px;
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .hiw__step { grid-template-columns: 60px 1fr; gap: var(--space-md); }
+  .hiw__step-circle { width: 56px; height: 56px; }
+  .hiw__step-emoji { font-size: 1.25rem; }
+  .hiw__formula-steps { grid-template-columns: repeat(2, 1fr); }
+  .hiw__step--reverse { direction: ltr; }
+}
+
+@media (max-width: 480px) {
+  .hiw__formula-steps { grid-template-columns: 1fr; }
+  .hiw__stage { flex-wrap: wrap; }
+}
