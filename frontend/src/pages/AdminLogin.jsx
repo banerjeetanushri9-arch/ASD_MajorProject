@@ -1,18 +1,19 @@
-// src/pages/AdminLogin.jsx — Admin login page.
-// Uses hardcoded credentials (admin / admin123) for demo.
-// Sets a localStorage flag on success, then redirects to dashboard.
+// Admin login connected to backend JWT authentication
+
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { adminLogin } from '../api'
 import './AdminLogin.css'
-
-// Hardcoded credentials for demo — replace with real auth in production
-const ADMIN_USER = 'admin'
-const ADMIN_PASS = 'admin123'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
-  const [form, setForm]       = useState({ username: '', password: '' })
-  const [error, setError]     = useState('')
+
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  })
+
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPass, setShowPass] = useState(false)
 
@@ -23,32 +24,45 @@ export default function AdminLogin() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!form.username || !form.password) {
-      setError('Please enter both username and password.')
+
+    if (!form.email.trim() || !form.password) {
+      setError('Please enter both email and password.')
       return
     }
 
     setLoading(true)
-    // Simulate a small delay so it feels like a real auth call
-    await new Promise(r => setTimeout(r, 600))
-    setLoading(false)
+    setError('')
 
-    if (form.username === ADMIN_USER && form.password === ADMIN_PASS) {
+    try {
+      const data = await adminLogin({
+        email: form.email.trim(),
+        password: form.password,
+      })
+
+      if (!data.token) {
+        throw new Error('Authentication token was not received.')
+      }
+
+      localStorage.removeItem('ghardrishya_user_token')
+      localStorage.removeItem('ghardrishya_user')
+
+      localStorage.setItem('ghardrishya_admin_token', data.token)
       localStorage.setItem('ghardrishya_admin', 'true')
+
       navigate('/admin/dashboard')
-    } else {
-      setError('Invalid credentials. Try admin / admin123 for demo.')
+    } catch (err) {
+      setError(err.message || 'Login failed. Please try again.')
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <div className="adminlogin">
-      {/* Decorative orbs */}
       <div className="adminlogin__orb adminlogin__orb--1" aria-hidden="true" />
       <div className="adminlogin__orb adminlogin__orb--2" aria-hidden="true" />
 
       <div className="adminlogin__card glass-card anim-fadeInUp">
-        {/* Header */}
         <div className="adminlogin__header">
           <div className="adminlogin__icon">🔐</div>
           <h1 className="adminlogin__title">Admin Login</h1>
@@ -57,24 +71,29 @@ export default function AdminLogin() {
           </p>
         </div>
 
-        {/* Error */}
         {error && (
           <div className="adminlogin__error" role="alert">
             <span>⚠️</span> {error}
           </div>
         )}
 
-        {/* Form */}
-        <form id="admin-login-form" className="adminlogin__form" onSubmit={handleSubmit} noValidate>
+        <form
+          id="admin-login-form"
+          className="adminlogin__form"
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <div className="form-group">
-            <label htmlFor="admin-username" className="form-label">Username</label>
+            <label htmlFor="admin-email" className="form-label">
+              Email
+            </label>
             <input
-              id="admin-username"
-              name="username"
-              type="text"
+              id="admin-email"
+              name="email"
+              type="email"
               className="form-input"
-              placeholder="Enter username"
-              value={form.username}
+              placeholder="Enter admin email"
+              value={form.email}
               onChange={handleChange}
               autoComplete="username"
               autoFocus
@@ -82,7 +101,10 @@ export default function AdminLogin() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="admin-password" className="form-label">Password</label>
+            <label htmlFor="admin-password" className="form-label">
+              Password
+            </label>
+
             <div className="adminlogin__pass-wrap">
               <input
                 id="admin-password"
@@ -94,6 +116,7 @@ export default function AdminLogin() {
                 onChange={handleChange}
                 autoComplete="current-password"
               />
+
               <button
                 type="button"
                 className="adminlogin__show-pass"
@@ -108,7 +131,9 @@ export default function AdminLogin() {
           <button
             id="admin-login-submit"
             type="submit"
-            className={`btn btn-primary adminlogin__submit ${loading ? 'adminlogin__submit--loading' : ''}`}
+            className={`btn btn-primary adminlogin__submit ${
+              loading ? 'adminlogin__submit--loading' : ''
+            }`}
             disabled={loading}
           >
             {loading ? (
@@ -122,15 +147,10 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        {/* Demo hint */}
-        <div className="adminlogin__hint">
-          <span>💡</span>
-          <span>Demo credentials: <code>admin</code> / <code>admin123</code></span>
-        </div>
-
-        {/* Back link */}
         <div className="adminlogin__back">
-          <Link to="/" className="adminlogin__back-link">← Back to Home</Link>
+          <Link to="/" className="adminlogin__back-link">
+            ← Back to Home
+          </Link>
         </div>
       </div>
     </div>

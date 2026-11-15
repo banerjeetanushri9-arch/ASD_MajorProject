@@ -56,7 +56,7 @@ function RateRow({ rate, onSave }) {
       <td>
         <div className="dashboard__state-cell">
           <span className="dashboard__state-dot" />
-          <span className="dashboard__state-name">{rate.state}</span>
+          <span className="dashboard__state-name">{rate.name}</span>
         </div>
       </td>
       <td>
@@ -74,7 +74,7 @@ function RateRow({ rate, onSave }) {
               max="10000"
               step="50"
               autoFocus
-              aria-label={`Base rate for ${rate.state}`}
+              aria-label={`Base rate for ${rate.name}`}
             />
             <span className="dashboard__unit">/ sq ft</span>
           </div>
@@ -103,7 +103,7 @@ function RateRow({ rate, onSave }) {
               className="btn btn-sm btn-teal"
               onClick={handleSave}
               disabled={saving}
-              aria-label={`Save rate for ${rate.state}`}
+              aria-label={`Save rate for ${rate.name}`}
             >
               {saving ? '…' : '✓ Save'}
             </button>
@@ -120,7 +120,7 @@ function RateRow({ rate, onSave }) {
             id={`edit-rate-${rate.id}`}
             className="btn btn-sm btn-ghost"
             onClick={() => setEditing(true)}
-            aria-label={`Edit rate for ${rate.state}`}
+            aria-label={`Edit rate for ${rate.name}`}
           >
             ✏️ Edit
           </button>
@@ -253,13 +253,14 @@ export default function AdminDashboard() {
   async function handleAddRate(body) {
     const created = await createRate(body)
     setRates(rs => [...rs, created])
-    showToast(`Rate for ${created.state || body.state} added!`)
+    showToast(`Rate for ${created.name || body.state} added!`)
   }
 
   function handleLogout() {
-    localStorage.removeItem('ghardrishya_admin')
-    navigate('/admin')
-  }
+  localStorage.removeItem('ghardrishya_admin')
+  localStorage.removeItem('ghardrishya_admin_token')
+  navigate('/admin')
+}
 
   return (
     <div className="dashboard">
@@ -376,7 +377,7 @@ export default function AdminDashboard() {
 
         {/* Add new rate */}
         <AddRateForm
-          existingStates={rates.map(r => r.state)}
+          existingStates={rates.map(r => r.name)}
           onAdd={handleAddRate}
         />
 

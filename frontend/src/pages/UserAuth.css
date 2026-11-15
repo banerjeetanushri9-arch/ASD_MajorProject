@@ -1,0 +1,52 @@
+
+.userauth__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 0.3rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.userauth__tab {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--txt-muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userauth__tab--active {
+  background: var(--clr-teal-400);
+  color: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.userauth__tab:not(.userauth__tab--active):hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--txt-primary);
+}
+
+.userauth__success {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: 10px;
+  background: rgba(22, 163, 74, 0.08);
+  color: #15803d;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.userauth .adminlogin__header {
+  margin-bottom: 1rem;
+}
+
+.userauth .adminlogin__back {
+  margin-top: 1.5rem;
+}

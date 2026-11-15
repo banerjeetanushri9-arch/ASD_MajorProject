@@ -113,3 +113,12 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 HouseVisualizer_BackUpThisFolder_ButDontShipItWithYourGame/
+# Environment secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Local backup files
+*.backup
+*.backup.meta

@@ -1,0 +1,24 @@
+[build]
+  command = "cd backend && npm ci && npx prisma generate --config prisma7.config.js && cd ../frontend && npm ci && npm run build"
+  publish = "frontend/dist"
+
+[functions]
+  directory = "backend/netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/api"
+  to = "/.netlify/functions/api/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

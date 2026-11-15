@@ -3,6 +3,11 @@ const jwt = require("jsonwebtoken");
 
 function verifyAdmin(req, res, next) {
   try {
+    if (!process.env.JWT_SECRET) {
+  return res.status(500).json({
+    error: "JWT secret is not configured",
+  });
+}
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {

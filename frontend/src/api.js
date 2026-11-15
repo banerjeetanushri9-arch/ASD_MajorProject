@@ -1,37 +1,113 @@
-// src/api.js — Single source of truth for all API calls.
-// All requests go to /api (proxied to localhost:3000 by vite.config.js).
 
-const BASE = '/api'
+// src/api.js — Centralized API configuration
 
-// Helper: wraps fetch and returns parsed JSON (throws on error)
-async function request(path, options = {}) {
+const BASE = '/api';
+
+// Centralized API request helper
+// Admin JWT is attached ONLY when requireAdmin is true.
+async function request(path, options = {}, requireAdmin = false) {
+  const token = requireAdmin
+    ? localStorage.getItem('ghardrishya_admin_token')
+    : null;
+
   const res = await fetch(BASE + path, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
     ...options,
-  })
-  const data = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`)
-  return data
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options.headers,
+    },
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(data.error || `HTTP ${res.status}`);
+  }
+
+  return data;
 }
 
-// GET /api/house-types → [{ id, label, areaSqFt }, ...]
-export const getHouseTypes = () => request('/house-types')
+// House types
+export const getHouseTypes = () =>
+  request('/house-types');
 
-// GET /api/materials → { walls: [...], roofs: [...] }
-export const getMaterials = () => request('/materials')
+// Materials
+export const getMaterials = () =>
+  request('/materials');
 
-// GET /api/rates?state=... → [{ id, state, baseRate }]
+// Rates — Read-only access for everyone
 export const getRates = (state = '') =>
-  request(`/rates${state ? `?state=${encodeURIComponent(state)}` : ''}`)
+  request(`/rates${state ? `?state=${encodeURIComponent(state)}` : ''}`);
 
-// POST /api/rates  body: { state, baseRate }
+// Add a state rate — Admin only
 export const createRate = (body) =>
-  request('/rates', { method: 'POST', body: JSON.stringify(body) })
+  request(
+    '/rates',
+    {
+      method: 'POST',
+      body: JSON.stringify(body),
+    },
+    true
+  );
 
-// PUT /api/rates/:id  body: { baseRate }
+// Update a state rate — Admin only
 export const updateRate = (id, body) =>
-  request(`/rates/${id}`, { method: 'PUT', body: JSON.stringify(body) })
+  request(
+    `/rates/${id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    },
+    true
+  );
 
-// POST /api/estimate  body: { houseType, wall, roof, state }
+// Estimate
 export const postEstimate = (body) =>
-  request('/estimate', { method: 'POST', body: JSON.stringify(body) })
+  request('/estimate', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+
+// Admin login
+export const adminLogin = (body) =>
+  request('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+
+// Common user registration
+export const userRegister = (body) =>
+  fetch(BASE + '/user-auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  }).then(async (res) => {
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Registration failed');
+    }
+
+    return data;
+  });
+
+// Common user login
+export const userLogin = (body) =>
+  fetch(BASE + '/user-auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  }).then(async (res) => {
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Login failed');
+    }
+
+    return data;
+  });
